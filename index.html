@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kengu.ru - Фриланс маркетплейс</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #FF6B35;
+            --primary-dark: #E55A24;
+            --secondary-color: #004E89;
+            --accent-color: #F7B801;
+            --background: #FFFFFF;
+            --surface: #F5F7FA;
+            --text-primary: #1A1A1A;
+            --text-secondary: #666666;
+            --border-color: #E0E0E0;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-primary);
+            background-color: var(--background);
+            line-height: 1.6;
+        }
+
+        /* Навигация */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--background);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 20px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 11px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Основной контент */
+        main {
+            margin-top: 70px;
+        }
+
+        /* Герой секция */
+        .hero {
+            background: linear-gradient(135deg, #FFF5E6 0%, #E8F4F8 100%);
+            padding: 100px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 78, 137, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.15;
+            color: var(--text-primary);
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            max-width: 650px;
+            margin: 0 auto;
+            margin-bottom: 60px;
+            box-shadow: var(--shadow-lg);
+            border-radius: 12px;
+            background: white;
+            padding: 6px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-btn {
+            padding: 16px 40px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 900px;
+            height: 450px;
+            background: linear-gradient(135deg, #FFE5CC 0%, #D4E8F7 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+            font-weight: 600;
+        }
+
+        /* Категории */
+        .categories-section {
+            padding: 100px 24px;
+            background: var(--background);
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .category-card {
+            padding: 32px 24px;
+            background: var(--surface);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.25) rotate(-10deg);
+        }
+
+        .category-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Как это работает */
+        .how-it-works {
+            padding: 100px 24px;
+            background: linear-gradient(135deg, #F5F7FA 0%, #E8F4F8 100%);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 auto 24px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-card:hover .step-number {
+            transform: scale(1.15);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* Отзывы */
+        .testimonials-section {
+            padding: 100px 24px;
+            background: var(--background);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-card {
+            padding: 32px;
+            background: var(--surface);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            font-size: 64px;
+            color: var(--primary-color);
+            opacity: 0.15;
+            font-weight: 800;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .stars {
+            color: var(--accent-color);
+            font-size: 16px;
+            margin-bottom: 16px;
+            letter-spacing: 3px;
+            font-weight: 700;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .author-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            color: var(--text-primary);
+        }
+
+        .author-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* CTA секция */
+        .cta-section {
+            padding: 100px 24px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #003D6B 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -15%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-content {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-light {
+            background: white;
+            color: var(--secondary-color);
+        }
+
+        .btn-light:hover {
+            background: #F0F4FF;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        /* Футер */
+        footer {
+            background: #0F1419;
+            color: white;
+            padding: 80px 24px 30px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 14px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 48px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-close {
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            clear: both;
+            color: var(--text-primary);
+        }
+
+        .modal-text {
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-buttons .btn {
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 16px;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .hero-image {
+                height: 280px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cta-section h2 {
+                font-size: 28px;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+
+            .modal-content {
+                padding: 32px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .category-card {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+        .category-card:nth-child(7) { animation-delay: 0.7s; }
+        .category-card:nth-child(8) { animation-delay: 0.8s; }
+
+        .step-card {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .step-card:nth-child(1) { animation-delay: 0.1s; }
+        .step-card:nth-child(2) { animation-delay: 0.2s; }
+        .step-card:nth-child(3) { animation-delay: 0.3s; }
+        .step-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .testimonial-card {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .testimonial-card:nth-child(1) { animation-delay: 0.1s; }
+        .testimonial-card:nth-child(2) { animation-delay: 0.2s; }
+        .testimonial-card:nth-child(3) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🦘</div>
+                Kengu
+            </a>
+            <div class="nav-center">
+                <a href="#" class="nav-link">Для заказчиков</a>
+                <a href="#" class="nav-link">Для исполнителей</a>
+                <a href="#" class="nav-link">Как это работает</a>
+                <a href="#" class="nav-link">Помощь</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn btn-secondary" onclick="openModal('login')">Вход</button>
+                <button class="btn btn-primary" onclick="openModal('register')">Регистрация</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Герой секция -->
+        <section class="hero">
+            <div class="hero-container">
+                <h1>Прыгайте к успеху с <span class="highlight">Kengu</span></h1>
+                <p class="hero-subtitle">Самый быстрый и удобный маркетплейс фрилансеров. Найдите идеального исполнителя за минуты, а не дни</p>
+                
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Что вам нужно сделать?">
+                    <button class="btn btn-primary search-btn">Найти</button>
+                </div>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="openModal('project')">Разместить проект</button>
+                    <button class="btn btn-secondary" onclick="openModal('search')">Найти исполнителя</button>
+                </div>
+
+                <div class="hero-image">
+                    🚀 Начните зарабатывать или экономить прямо сейчас
+                </div>
+            </div>
+        </section>
+
+        <!-- Категории услуг -->
+        <section class="categories-section">
+            <div class="section-container">
+                <h2 class="section-title">Категории услуг</h2>
+                <div class="categories-grid">
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Дизайн')">
+                        <div class="category-icon">🎨</div>
+                        <div class="category-name">Дизайн</div>
+                        <div class="category-count">2,450 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Разработка')">
+                        <div class="category-icon">💻</div>
+                        <div class="category-name">Разработка</div>
+                        <div class="category-count">3,120 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Контент')">
+                        <div class="category-icon">✍️</div>
+                        <div class="category-name">Контент</div>
+                        <div class="category-count">1,890 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Маркетинг')">
+                        <div class="category-icon">📱</div>
+                        <div class="category-name">Маркетинг</div>
+                        <div class="category-count">2,340 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Видео')">
+                        <div class="category-icon">🎬</div>
+                        <div class="category-name">Видео</div>
+                        <div class="category-count">1,560 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Аналитика')">
+                        <div class="category-icon">📊</div>
+                        <div class="category-name">Аналитика</div>
+                        <div class="category-count">890 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'Аудио')">
+                        <div class="category-icon">🔊</div>
+                        <div class="category-name">Аудио</div>
+                        <div class="category-count">650 исполнителей</div>
+                    </a>
+                    <a href="#" class="category-card" onclick="handleCategoryClick(event, 'SEO')">
+                        <div class="category-icon">🌐</div>
+                        <div class="category-name">SEO</div>
+                        <div class="category-count">1,240 исполнителей</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Как это работает -->
+        <section class="how-it-works">
+            <div class="section-container">
+                <h2 class="section-title">Как это работает</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Опишите проект</h3>
+                        <p class="step-description">Расскажите о том, что вам нужно. Используйте AI-помощник для создания полного ТЗ</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Получите предложения</h3>
+                        <p class="step-description">Лучшие исполнители отправят свои предложения с ценой и сроками</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Выберите исполнителя</h3>
+                        <p class="step-description">Сравните портфолио, отзывы и выберите идеального кандидата</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Получите результат</h3>
+                        <p class="step-description">Работайте с исполнителем и платите только за готовый результат</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section class="testimonials-section">
+            <div class="section-container">
+                <h2 class="section-title">Отзывы пользователей</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Kengu просто спасение! За 3 дня нашел дизайнера, который создал логотип мечты. Качество на 100%!"</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">МИ</div>
+                            <div class="author-info">
+                                <div class="author-name">Максим И.</div>
+                                <div class="author-role">Основатель стартапа</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Как фрилансер, я очень доволен платформой. Много интересных проектов, быстрые платежи и поддержка 24/7."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">АС</div>
+                            <div class="author-info">
+                                <div class="author-name">Анна С.</div>
+                                <div class="author-role">Веб-дизайнер</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Помощник по ТЗ с AI — это гениально! Я не знал, как описать проект, а система все структурировала за минуту."</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">ОВ</div>
+                            <div class="author-info">
+                                <div class="author-name">Олег В.</div>
+                                <div class="author-role">Менеджер проектов</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA секция -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Прыгайте на Kengu прямо сейчас!</h2>
+                <p>Присоединитесь к 50,000+ пользователей, которые уже экономят время и деньги</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-light" onclick="openModal('register')">Я заказчик</button>
+                    <button class="btn btn-light" onclick="openModal('register')">Я исполнитель</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>О Kengu</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Блог</a></li>
+                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Пресс</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Для заказчиков</h3>
+                    <ul>
+                        <li><a href="#">Как работает</a></li>
+                        <li><a href="#">Цены</a></li>
+                        <li><a href="#">Безопасность</a></li>
+                        <li><a href="#">Гарантия</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Для исполнителей</h3>
+                    <ul>
+                        <li><a href="#">Начать зарабатывать</a></li>
+                        <li><a href="#">Как работает</a></li>
+                        <li><a href="#">Комиссии</a></li>
+                        <li><a href="#">Поддержка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Центр поддержки</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Статус сервиса</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; 2024 Kengu.ru. Все права защищены.</div>
+                <div>
+                    <a href="#">Политика конфиденциальности</a> | 
+                    <a href="#">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('login')">&times;</span>
+            <h2 class="modal-title">Вход в Kengu</h2>
+            <p class="modal-text">Введите ваши учетные данные</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" placeholder="Email" style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <input type="password" placeholder="Пароль" style="width: 100%; padding: 14px; margin-bottom: 28px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('register')">&times;</span>
+            <h2 class="modal-title">Регистрация на Kengu</h2>
+            <p class="modal-text">Создайте новый аккаунт</p>
+            <form onsubmit="handleRegister(event)">
+                <input type="text" placeholder="Ваше имя" style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <input type="email" placeholder="Email" style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <input type="password" placeholder="Пароль" style="width: 100%; padding: 14px; margin-bottom: 28px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('project')">&times;</span>
+            <h2 class="modal-title">Разместить проект</h2>
+            <p class="modal-text">Опишите, что вам нужно сделать</p>
+            <form onsubmit="handleProject(event)">
+                <input type="text" placeholder="Название проекта" style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <textarea placeholder="Описание проекта" style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px; min-height: 100px;" required></textarea>
+                <input type="number" placeholder="Бюджет (руб.)" style="width: 100%; padding: 14px; margin-bottom: 28px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Разместить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('search')">&times;</span>
+            <h2 class="modal-title">Найти исполнителя</h2>
+            <p class="modal-text">Выберите категорию и найдите лучшего</p>
+            <form onsubmit="handleSearch(event)">
+                <select style="width: 100%; padding: 14px; margin-bottom: 14px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;" required>
+                    <option value="">Выберите категорию</option>
+                    <option value="design">Дизайн</option>
+                    <option value="development">Разработка</option>
+                    <option value="content">Контент</option>
+                    <option value="marketing">Маркетинг</option>
+                </select>
+                <input type="text" placeholder="Ключевые слова" style="width: 100%; padding: 14px; margin-bottom: 28px; border: 2px solid #E0E0E0; border-radius: 10px; font-size: 15px;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Найти</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Управление навбаром при прокрутке
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Управление модальными окнами
+        function openModal(type) {
+            const modalId = type + 'Modal';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(type) {
+            const modalId = type + 'Modal';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        });
+
+        // Обработчики форм
+        function handleLogin(event) {
+            event.preventDefault();
+            alert('Добро пожаловать в Kengu!');
+            closeModal('login');
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            alert('Регистрация успешна! Добро пожаловать на Kengu!');
+            closeModal('register');
+        }
+
+        function handleProject(event) {
+            event.preventDefault();
+            alert('Проект успешно размещен на Kengu!');
+            closeModal('project');
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            alert('Поиск исполнителей на Kengu...');
+            closeModal('search');
+        }
+
+        function handleCategoryClick(event, category) {
+            event.preventDefault();
+            alert('Переход в категорию: ' + category);
+        }
+
+        // Поиск
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const query = document.querySelector('.search-input').value;
+            if (query) {
+                alert('Поиск на Kengu по запросу: ' + query);
+            }
+        });
+    </script>
+</body>
+</html>
